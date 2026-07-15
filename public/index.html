@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CollIde</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="splash" class="splash">
+    <span class="splash-dot"></span>
+    <div class="splash-text">открываем комнату…</div>
+  </div>
+
+  <div id="toasts" class="toasts"></div>
+
+  <!-- меню -->
+  <div id="drawerBackdrop" class="drawer-backdrop hidden"></div>
+  <nav id="drawer" class="drawer">
+    <div class="drawer-head">
+      <span class="drawer-title"><i class="fa-solid fa-code"></i> collide</span>
+      <button id="drawerClose" class="icon-btn" aria-label="закрыть меню"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="drawer-section">
+      <div class="drawer-label">текущая комната</div>
+      <div class="drawer-room" id="drawerRoom">...</div>
+      <button id="drawerNewRoom" class="btn-line"><i class="fa-solid fa-plus"></i> новая комната</button>
+    </div>
+    <div class="drawer-section">
+      <div class="drawer-label">участники</div>
+      <div class="drawer-peers" id="drawerPeers"></div>
+    </div>
+    <div class="drawer-section">
+      <div class="drawer-label">настройки</div>
+      <div class="drawer-settings">
+        <label class="setting-row">
+          <span class="setting-text">
+            <i class="fa-solid fa-bell"></i>
+            звук при сообщениях
+          </span>
+          <input type="checkbox" id="settingSound" class="setting-toggle" />
+        </label>
+        <label class="setting-row">
+          <span class="setting-text">
+            <i class="fa-solid fa-door-open"></i>
+            звук при входе
+          </span>
+          <input type="checkbox" id="settingJoinSound" class="setting-toggle" />
+        </label>
+        <label class="setting-row">
+          <span class="setting-text">
+            <i class="fa-solid fa-champagne-glasses"></i>
+            конфетти при входе
+          </span>
+          <input type="checkbox" id="settingConfetti" class="setting-toggle" checked />
+        </label>
+        <label class="setting-row">
+          <span class="setting-text">
+            <i class="fa-solid fa-minimize"></i>
+            компактный редактор
+          </span>
+          <input type="checkbox" id="settingCompact" class="setting-toggle" />
+        </label>
+        <label class="setting-row">
+          <span class="setting-text">
+            <i class="fa-solid fa-moon"></i>
+            приглушённый акцент
+          </span>
+          <input type="checkbox" id="settingMutedAccent" class="setting-toggle" />
+        </label>
+        <div class="setting-row setting-row--stack">
+          <span class="setting-text">
+            <i class="fa-solid fa-palette"></i>
+            цвет акцента
+          </span>
+          <div class="accent-swatches" id="accentSwatches">
+            <button type="button" class="accent-swatch active" data-accent="#6e7bff" style="--swatch:#6e7bff" aria-label="фиолетовый"></button>
+            <button type="button" class="accent-swatch" data-accent="#3ecf8e" style="--swatch:#3ecf8e" aria-label="мятный"></button>
+            <button type="button" class="accent-swatch" data-accent="#e0b64b" style="--swatch:#e0b64b" aria-label="янтарный"></button>
+            <button type="button" class="accent-swatch" data-accent="#ef5a6f" style="--swatch:#ef5a6f" aria-label="коралловый"></button>
+            <button type="button" class="accent-swatch" data-accent="#6e9fff" style="--swatch:#6e9fff" aria-label="голубой"></button>
+          </div>
+        </div>
+        <div class="setting-row setting-row--stack">
+          <span class="setting-text">
+            <i class="fa-solid fa-user-pen"></i>
+            имя в комнате
+          </span>
+          <input type="text" id="settingName" class="setting-input" maxlength="24" autocomplete="off" />
+        </div>
+      </div>
+    </div>
+    <div class="drawer-foot">
+      <i class="fa-solid fa-circle-info"></i> ии пока заглушка, чат и редактор рабочие
+    </div>
+  </nav>
+
+  <div class="shell">
+
+    <div class="left-col">
+      <div class="top-row">
+        <div class="chip chip--project">
+          <button id="menuBtn" class="icon-btn" aria-label="меню">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <span class="brand-mark" id="brandMark"></span>
+          <span class="brand-name">collide</span>
+          <span class="status-dot-wrap" id="status" title="подключение…">
+            <span class="status-dot" id="statusDot"></span>
+          </span>
+        </div>
+
+        <div class="chip chip--peers">
+          <div class="peers" id="peers"></div>
+          <span class="chip-divider"></span>
+          <span class="room-label"><i class="fa-regular fa-compass"></i></span>
+          <span class="room-chip" id="roomName">...</span>
+          <button id="copyLink" class="icon-btn" aria-label="скопировать ссылку">
+            <i class="fa-solid fa-link icon-link"></i>
+            <i class="fa-solid fa-check icon-check"></i>
+          </button>
+        </div>
+      </div>
+
+      <section class="editor-wrap" id="editorWrap">
+        <div id="dropHint" class="drop-hint hidden">
+          <i class="fa-solid fa-file-import"></i>
+          <span>брось файл сюда</span>
+        </div>
+        <div id="editor"></div>
+      </section>
+
+      <div class="status-stack">
+        <div class="log-drawer hidden" id="logDrawer">
+          <div class="log" id="log"></div>
+        </div>
+
+        <div class="logbar">
+          <i class="fa-regular fa-file-code"></i>
+          <span class="logbar-file" id="logbarFile">untitled.js</span>
+          <span class="logbar-sep">·</span>
+          <span class="logbar-desc" id="logbarDesc">пусто, ждёт первую строчку</span>
+          <span class="logbar-fill"></span>
+          <div class="logbar-actions">
+            <input type="file" id="openFileInput" class="hidden-file" tabindex="-1" />
+            <button id="openFile" class="logbar-action" aria-label="открыть файл" title="открыть (ctrl+o)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+            <button id="downloadFile" class="logbar-action" aria-label="сохранить файл" title="сохранить (ctrl+s)">
+              <i class="fa-solid fa-floppy-disk"></i>
+            </button>
+            <button id="logToggle" class="logbar-toggle" aria-label="показать лог">
+              <i class="fa-solid fa-chevron-up"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="chat-panel">
+      <div class="chat-modes">
+        <button class="mode active" data-mode="chat">
+          <i class="fa-regular fa-comments"></i> чат
+          <span class="unread hidden" id="unreadChat"></span>
+        </button>
+        <button class="mode" data-mode="ai">
+          <i class="fa-solid fa-robot"></i> ии
+        </button>
+        <span class="mode-indicator" id="modeIndicator"></span>
+      </div>
+
+      <div class="ai-context hidden" id="aiContext">
+        <i class="fa-solid fa-eye"></i>
+        <span id="aiContextText">контекст: файл целиком · 0 строк</span>
+      </div>
+
+      <div class="chat-body" id="chatBody-chat">
+        <div class="ai-msg ai-msg--bot">чат комнаты, пиши сюда увидят все</div>
+      </div>
+
+      <div class="chat-body hidden" id="chatBody-ai">
+        <div class="ai-msg ai-msg--bot">привет! спроси что-нибудь про код или ткни подсказку снизу</div>
+      </div>
+
+      <div class="peer-typing hidden" id="peerTyping"></div>
+
+      <div class="quick-prompts hidden" id="quickPrompts">
+        <button class="chip-prompt" data-prompt="объясни этот код простыми словами">объяснить код</button>
+        <button class="chip-prompt" data-prompt="найди возможный баг в этом файле">найти баг</button>
+        <button class="chip-prompt" data-prompt="как это можно оптимизировать?">оптимизировать</button>
+      </div>
+
+      <div class="typing-indicator hidden" id="typingIndicator">
+        <span></span><span></span><span></span>
+      </div>
+
+      <form id="aiForm" class="ai-form">
+        <input id="aiInput" type="text" placeholder="написать в чат…" autocomplete="off" />
+        <button type="submit" aria-label="отправить">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </form>
+    </aside>
+
+  </div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "yjs": "https://esm.sh/yjs@13.6.18",
+      "y-websocket": "https://esm.sh/y-websocket@1.5.4?deps=yjs@13.6.18",
+      "y-monaco": "https://esm.sh/y-monaco@0.1.6?deps=yjs@13.6.18"
+    }
+  }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.49.0/min/vs/loader.min.js"></script>
+  <script type="module" src="client.js"></script>
+</body>
+</html>
