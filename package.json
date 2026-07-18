@@ -1,6 +1,6 @@
 {
   "name": "collide",
-  "version": "0.0.1-alpha",
+  "version": "0.0.3",
   "description": "",
   "main": "server/index.js",
   "scripts": {
