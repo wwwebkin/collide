@@ -7,27 +7,31 @@ echo  === CollIde ===
 echo.
 
 where node >nul 2>&1
-if errorlevel 1 (
-  echo  [!] нет Node.js. поставь с https://nodejs.org
-  echo.
-  pause
-  exit /b 1
-)
+if errorlevel 1 goto :noNode
 
-if not exist "node_modules\" (
-  echo  [>] первый запуск, ставлю зависимости...
-  call npm install
-  if errorlevel 1 (
-    echo  [!] npm install упал
-    pause
-    exit /b 1
-  )
-  echo.
-)
+if exist "node_modules\" goto :hasModules
 
-echo  [>] http://localhost:3000
-echo  [>] Ctrl+C чтобы стопнуть
+echo  [^>] pervyi zapusk, stavlyu zavisimosti...
+call npm install
+if errorlevel 1 goto :installFail
+echo.
+
+:hasModules
+echo  [^>] http://localhost:3000
+echo  [^>] Ctrl+C chtoby stopnut
 echo.
 
 start "" "http://localhost:3000"
 call npm start
+goto :eof
+
+:noNode
+echo  [!] net Node.js. postav s https://nodejs.org
+echo.
+pause
+exit /b 1
+
+:installFail
+echo  [!] npm install upal
+pause
+exit /b 1

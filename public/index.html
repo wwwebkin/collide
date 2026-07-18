@@ -1,20 +1,24 @@
 <!doctype html>
 <html lang="ru">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>CollIde</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>collide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
   <div id="splash" class="splash">
     <span class="splash-dot"></span>
-    <div class="splash-text">открываем комнату…</div>
+    <div class="splash-text">открываюся… (тороплюся)</div>
   </div>
 
   <div id="toasts" class="toasts"></div>
@@ -27,12 +31,12 @@
       <button id="drawerClose" class="icon-btn" aria-label="закрыть меню"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="drawer-section">
-      <div class="drawer-label">текущая комната</div>
+      <div class="drawer-label">эта комната</div>
       <div class="drawer-room" id="drawerRoom">...</div>
-      <button id="drawerNewRoom" class="btn-line"><i class="fa-solid fa-plus"></i> новая комната</button>
+      <button id="drawerNewRoom" class="btn-line"><i class="fa-solid fa-plus"></i> new room</button>
     </div>
     <div class="drawer-section">
-      <div class="drawer-label">участники</div>
+      <div class="drawer-label">кодеры</div>
       <div class="drawer-peers" id="drawerPeers"></div>
     </div>
     <div class="drawer-section">
@@ -41,7 +45,7 @@
         <label class="setting-row">
           <span class="setting-text">
             <i class="fa-solid fa-bell"></i>
-            звук при сообщениях
+            звук при сообщении
           </span>
           <input type="checkbox" id="settingSound" class="setting-toggle" />
         </label>
@@ -55,7 +59,7 @@
         <label class="setting-row">
           <span class="setting-text">
             <i class="fa-solid fa-champagne-glasses"></i>
-            конфетти при входе
+            бесполезная кнопка
           </span>
           <input type="checkbox" id="settingConfetti" class="setting-toggle" checked />
         </label>
@@ -96,7 +100,7 @@
       </div>
     </div>
     <div class="drawer-foot">
-      <i class="fa-solid fa-circle-info"></i> ии пока заглушка, чат и редактор рабочие
+      <i class="fa-solid fa-circle-info"></i> 0.1-alpha
     </div>
   </nav>
 
@@ -210,7 +214,7 @@
   </div>
 
   <script type="importmap">
-  {
+    {
     "imports": {
       "yjs": "https://esm.sh/yjs@13.6.18",
       "y-websocket": "https://esm.sh/y-websocket@1.5.4?deps=yjs@13.6.18",
@@ -221,4 +225,5 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.49.0/min/vs/loader.min.js"></script>
   <script type="module" src="client.js"></script>
 </body>
+
 </html>
